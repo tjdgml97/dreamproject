@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { submitToGoogleForm } from "../utils/googleForm";
 
+interface FormData {
+  name: string;
+  contact: string;
+  dreamType: string;
+  dreamContent: string;
+}
+
 const DreamInterpretation = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     contact: "",
     dreamType: "",
@@ -27,7 +34,7 @@ const DreamInterpretation = () => {
     >
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData((prev: FormData) => ({
       ...prev,
       [name]: value,
     }));

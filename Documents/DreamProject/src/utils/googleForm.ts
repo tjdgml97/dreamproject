@@ -1,4 +1,4 @@
-interface DreamFormData {
+interface FormData {
   name: string;
   contact: string;
   dreamType: string;
@@ -14,11 +14,9 @@ const FIELD_IDS = {
   dreamContent: "entry.1398418576",
 };
 
-export const submitToGoogleForm = async (
-  data: DreamFormData
-): Promise<boolean> => {
+export const submitToGoogleForm = async (data: FormData): Promise<boolean> => {
   try {
-    const response = await fetch("/.netlify/functions/submit-form", {
+    const response = await fetch("/.netlify/functions/submit-to-google-form", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,16 +24,13 @@ export const submitToGoogleForm = async (
       body: JSON.stringify(data),
     });
 
-    const result = await response.json();
-
     if (!response.ok) {
-      throw new Error(result.message || "Form submission failed");
+      throw new Error("Network response was not ok");
     }
 
-    console.log("Form submitted successfully:", result);
     return true;
   } catch (error) {
-    console.error("Form submission error:", error);
+    console.error("Error submitting form:", error);
     return false;
   }
 };
